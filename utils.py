@@ -1,5 +1,6 @@
 import numpy as np
 import glob
+from os.path import join
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras.utils import load_img
@@ -133,15 +134,16 @@ def train_on_ds(train_func,train_ds):
   return total_loss/size_ds
 
 def val_on_ds(val_func,val_ds):
-    '''
-  Apply the val_func in all the batches
+
+  '''
+    Apply the val_func in all the batches
   
-  Args:
-    val_func: function wich returns the loss and apply the gradients in some data.
-    train_ds: list of tensors (img,bboxes,labels)
+    Args:
+      val_func: function wich returns the loss and apply the gradients in some data.
+      train_ds: list of tensors (img,bboxes,labels)
   
-  Return:
-    the average loss
+    Return:
+      the average loss
   
   '''
   size_ds=len(val_ds)
@@ -183,7 +185,7 @@ def plot_detections(image_np,
                     category_index,
                     figsize=(12, 16),
                     image_name=None):
-    """
+  """
   Wrapper function to visualize detections.
 
   Args:
@@ -215,7 +217,7 @@ def plot_detections(image_np,
     plt.imshow(image_np_with_annotations)
  
 
-def create_images_postprocess(model,validation_images,images_path,fig_size):
+def create_images_postprocess(model,validation_images,images_path,fig_size,category_index):
   '''
   Create predictions from a object detection model
   
@@ -224,21 +226,22 @@ def create_images_postprocess(model,validation_images,images_path,fig_size):
     validation_images: List of np.array (H,W,3)
     images_path: Path where the predictions images will be saved.
     fig_size: Size of the images.
+    category_index: Dict of categories.
 
   '''
   
   for i,img in enumerate(validation_images):
-  img_=tf.expand_dims(img,axis=0)
-  img_,shape=model.preprocess(img_)
-  detections=model.predict(img_,shape)
-  detections=model.postprocess(detections,shape)
-  plot_detections(
-      img,
-      detections['detection_boxes'][0].numpy(),
-      detections['detection_classes'][0].numpy().astype(np.uint32),
-      detections['detection_scores'][0].numpy(),
-      dict_,figsize=fig_size,image_name=images_path+"/POST_FRAME_"+('%05d' % i)+".jpg"
-  )
+    img_=tf.expand_dims(img,axis=0)
+    img_,shape=model.preprocess(img_)
+    detections=model.predict(img_,shape)
+    detections=model.postprocess(detections,shape)
+    plot_detections(
+        img,
+        detections['detection_boxes'][0].numpy(),
+        detections['detection_classes'][0].numpy().astype(np.uint32),
+        detections['detection_scores'][0].numpy(),
+        category_index,figsize=fig_size,image_name=images_path+"/POST_FRAME_"+('%05d' % i)+".jpg"
+    )
 
 def create_validation_images(images_path,size_min=0.9):
   '''
@@ -280,8 +283,6 @@ def create_video(images,name_video):
   for i in range(len(images)):
     out.write(images[i])
   out.release()
-
-
 
 
 
