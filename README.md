@@ -15,3 +15,8 @@ Notes:
 
 * It doesn't matter the dimensions of the images, because with model.preprocess() it fits the dimensions of the model.
 * The prediction will be a dictionary containing several results that will be processed by model.postprocess().
+
+Dependencies:
+
+* Install Tensorflow Object Detection API
+* tensorflow 2.7.0
