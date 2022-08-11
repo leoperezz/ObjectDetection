@@ -28,6 +28,26 @@ def preprocess_bboxes(bboxes,image):
   bboxes/=shape_img
   return bboxes
 
+def reshape_img_and_bboxes(img,bboxes,target_size):
+  '''
+  Reshape an image and its bboxes
+  
+  Args:
+    img: np.array of (H,W,3)
+    bboxes: np.array of (N_i,4)
+    target_size: tuple of two elements.
+  
+  '''
+  
+  y_,x_=img.shape[0],img.shape[1]
+  y_scale=target_size[0]/y_
+  x_scale=target_size[1]/x_
+  bboxes=bboxes*np.array([y_,x_,y_,x_])
+  bboxes_=bboxes*np.array([y_scale,x_scale,y_scale,x_scale])
+  bboxes_/=np.array([target_size[0],target_size[1],target_size[0],target_size[1]])
+  img_=tf.image.resize(img,target_size).numpy()
+  return img_,bboxes_
+
 def get_train_step_func(model,vars_to_tune,optimizer):
   '''
   Get the train_step_func.
