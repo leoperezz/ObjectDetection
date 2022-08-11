@@ -192,7 +192,7 @@ def create_frame_video(video_path,frames_path):
   count = 0
   while success:
     name="FRAME_"+('%05d' % count)+".jpg"
-    cv2.imwrite(os.path.join(frames_path,name),image)     
+    cv2.imwrite(join(frames_path,name),image)     
     success,image = vidcap.read()
     print(f'Read a new frame, name: {name} state:{success}')
     count += 1
