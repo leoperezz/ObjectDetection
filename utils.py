@@ -264,7 +264,7 @@ def create_images_postprocess(model,validation_images,images_path,fig_size,min_s
         category_index,figsize=fig_size,min_score=min_score,image_name=images_path+"/POST_FRAME_"+('%05d' % i)+".jpg"
     )
 
-def create_validation_images(images_path,target_size,size_min=0.9):
+def create_array_from_images_path(images_path,frame_path,target_size,size_min=0.9):
   '''
   Creates a list of images(array of [H,W,3]) 
   
@@ -277,7 +277,7 @@ def create_validation_images(images_path,target_size,size_min=0.9):
   '''
   assert size_min<=1.0
   images=[]
-  glob_images=sorted(glob.glob(images_path+'/FRAME_'+'*.jpg'))
+  glob_images=sorted(glob.glob(images_path+'/'+frame_path+'_'+'*.jpg'))
   len_size=int(size_min*len(glob_images))
   glob_images=glob_images[:len_size]
   for name_img in glob_images:
