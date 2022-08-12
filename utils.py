@@ -264,7 +264,7 @@ def create_images_postprocess(model,validation_images,images_path,fig_size,min_s
         category_index,figsize=fig_size,min_score=min_score,image_name=images_path+"/POST_FRAME_"+('%05d' % i)+".jpg"
     )
 
-def create_array_from_images_path(images_path,name_frame,target_size,size_min=0.9):
+def create_array_from_images_path(images_path,name_frame,target_size,size_min=1):
   '''
   Creates a list of images(array of [H,W,3]) 
   
