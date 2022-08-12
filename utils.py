@@ -307,5 +307,24 @@ def create_video(images,name_video):
     out.write(images[i].astype('uint8'))
   out.release()
 
+def make_category_index(list_classes):
+  '''
+  Creates a category index for using viz_utils
+  
+  Args:
+    list_classes: List of classes in order
+  
+  Return:
+    Dictionary with ids and names
+  
+  '''
+  
+  num_classes=len(list_classes)
+  dict_={}
+  for i in range(num_classes):
+    dict_[i]={'id':i,'name':list_classes[i]}
+  return dict_
 
+classes=['N', 'C', 'D', 'T', 'W']
+category_index=make_category_index(classes)
 
