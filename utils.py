@@ -1,5 +1,5 @@
 import numpy as np
-import glob
+from glob import glob
 from os.path import join
 import matplotlib.pyplot as plt
 import tensorflow as tf
@@ -278,7 +278,7 @@ def create_array_from_images_path(images_path,name_frame,target_size,size_min=0.
   '''
   assert size_min<=1.0
   images=[]
-  glob_images=sorted(glob.glob(images_path+'/'+name_frame+'_'+'*.jpg'))
+  glob_images=sorted(glob(images_path+'/'+name_frame+'_'+'*.jpg'))
   len_size=int(size_min*len(glob_images))
   glob_images=glob_images[:len_size]
   for name_img in glob_images:
