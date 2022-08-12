@@ -204,6 +204,7 @@ def plot_detections(image_np,
                     scores,
                     category_index,
                     figsize=(12, 16),
+                    min_score=0.3,
                     image_name=None):
   """
   Wrapper function to visualize detections.
@@ -229,7 +230,7 @@ def plot_detections(image_np,
       scores,
       category_index,
       use_normalized_coordinates=True,
-      min_score_thresh=0.1)
+      min_score_thresh=min_score)
   image_np_with_annotations/=255.0 
   if image_name:
     plt.imsave(image_name, image_np_with_annotations)
@@ -237,7 +238,7 @@ def plot_detections(image_np,
     plt.imshow(image_np_with_annotations)
  
 
-def create_images_postprocess(model,validation_images,images_path,fig_size,category_index):
+def create_images_postprocess(model,validation_images,images_path,fig_size,min_score,category_index):
   '''
   Create predictions from a object detection model
   
@@ -260,7 +261,7 @@ def create_images_postprocess(model,validation_images,images_path,fig_size,categ
         detections['detection_boxes'][0].numpy(),
         detections['detection_classes'][0].numpy().astype(np.uint32),
         detections['detection_scores'][0].numpy(),
-        category_index,figsize=fig_size,image_name=images_path+"/POST_FRAME_"+('%05d' % i)+".jpg"
+        category_index,figsize=fig_size,min_score=min_score,image_name=images_path+"/POST_FRAME_"+('%05d' % i)+".jpg"
     )
 
 def create_validation_images(images_path,size_min=0.9):
