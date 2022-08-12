@@ -284,7 +284,7 @@ def create_array_from_images_path(images_path,name_frame,target_size,size_min=0.
   for name_img in glob_images:
     img_PIL=load_img(join(images_path,name_img))
     img_np=img_to_array(img_PIL)
-    img_np=tf.image.resize(img_np,target_size)
+    img_np=tf.image.resize(img_np,target_size).numpy()
     images.append(img_np)
   return images
   
