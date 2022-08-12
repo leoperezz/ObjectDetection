@@ -264,7 +264,7 @@ def create_images_postprocess(model,validation_images,images_path,fig_size,min_s
         category_index,figsize=fig_size,min_score=min_score,image_name=images_path+"/POST_FRAME_"+('%05d' % i)+".jpg"
     )
 
-def create_validation_images(images_path,size_min=0.9):
+def create_validation_images(images_path,target_size,size_min=0.9):
   '''
   Creates a list of images(array of [H,W,3]) 
   
@@ -283,6 +283,7 @@ def create_validation_images(images_path,size_min=0.9):
   for name_img in glob_images:
     img_PIL=load_img(join(images_path,name_img))
     img_np=img_to_array(img_PIL)
+    img_np=tf.image.resize(img_np,target_size)
     images.append(img_np)
   return images
   
