@@ -304,7 +304,7 @@ def create_video(images,name_video):
   out = cv2.VideoWriter(name_video+'.mp4',cv2.VideoWriter_fourcc(*'MP4V'), 50, size)
  
   for i in range(len(images)):
-    out.write(images[i].astype('uint8')
+    out.write(images[i].astype('uint8'))
   out.release()
 
 
