@@ -178,7 +178,7 @@ def val_on_ds(val_func,val_ds):
   return total_loss/size_ds  
 
 
-def create_frame_video(video_path,frames_path):
+def create_frame_video(video_path,name_frame,frames_path):
   '''
   Creates a frames videos from a video
   
@@ -191,7 +191,7 @@ def create_frame_video(video_path,frames_path):
   success,image = vidcap.read()
   count = 0
   while success:
-    name="FRAME_"+('%05d' % count)+".jpg"
+    name=name_frame+"_"+('%05d' % count)+".jpg"
     cv2.imwrite(join(frames_path,name),image)     
     success,image = vidcap.read()
     print(f'Read a new frame, name: {name} state:{success}')
@@ -264,12 +264,13 @@ def create_images_postprocess(model,validation_images,images_path,fig_size,min_s
         category_index,figsize=fig_size,min_score=min_score,image_name=images_path+"/POST_FRAME_"+('%05d' % i)+".jpg"
     )
 
-def create_array_from_images_path(images_path,frame_path,target_size,size_min=0.9):
+def create_array_from_images_path(images_path,name_frame,target_size,size_min=0.9):
   '''
   Creates a list of images(array of [H,W,3]) 
   
   Args:
     images_path: Path where the images are saved from video
+    name_frame: Name of the frame before '_'
     size_min: The min size of the images that will be used (1 is the max)
   
   Returns:
@@ -277,7 +278,7 @@ def create_array_from_images_path(images_path,frame_path,target_size,size_min=0.
   '''
   assert size_min<=1.0
   images=[]
-  glob_images=sorted(glob.glob(images_path+'/'+frame_path+'_'+'*.jpg'))
+  glob_images=sorted(glob.glob(images_path+'/'+name_frame+'_'+'*.jpg'))
   len_size=int(size_min*len(glob_images))
   glob_images=glob_images[:len_size]
   for name_img in glob_images:
